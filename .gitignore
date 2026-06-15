@@ -35,3 +35,4 @@ next-env.d.ts
 
 # prisma cache
 node_modules/.cache/
+prisma/dev.db
