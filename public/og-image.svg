@@ -1,0 +1,12 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="630" fill="#0F172A"/>
+  <circle cx="1040" cy="120" r="260" fill="#7C3AED" opacity="0.28"/>
+  <circle cx="150" cy="520" r="260" fill="#2563EB" opacity="0.24"/>
+  <path d="M250 205H575C620 205 655 242 655 288V342C655 388 620 425 575 425H250C205 425 170 388 170 342V288C170 242 205 205 250 205Z" fill="#1E3A8A"/>
+  <path d="M230 250H600" stroke="#93C5FD" stroke-width="18" stroke-linecap="round"/>
+  <path d="M230 315H510" stroke="#C4B5FD" stroke-width="18" stroke-linecap="round"/>
+  <path d="M230 380H565" stroke="#93C5FD" stroke-width="18" stroke-linecap="round"/>
+  <text x="110" y="150" fill="#F8FAFC" font-family="Arial, sans-serif" font-size="46" font-weight="700" letter-spacing="6">CENTRAAS</text>
+  <text x="110" y="500" fill="#E0E7FF" font-family="Arial, sans-serif" font-size="58" font-weight="700">Laboratory Learning Platform</text>
+  <text x="112" y="555" fill="#BFDBFE" font-family="Arial, sans-serif" font-size="30">AAS Machine • Centrifuge • SOP • Safety-first training</text>
+</svg>

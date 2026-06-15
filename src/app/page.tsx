@@ -3,7 +3,9 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { ArrowRight, Star } from 'lucide-react';
+import { ArrowRight, BookOpen, FlaskConical, RotateCcw, ShieldCheck, Star } from 'lucide-react';
+import LearningObjectives from '@/components/phase-one/learning-objectives';
+import SafetyDisclaimer from '@/components/phase-one/safety-disclaimer';
 
 const welcomeImages = [
   { src: '/images/scientist-aas.png', alt: 'Scientist operating AAS machine' },
@@ -12,103 +14,159 @@ const welcomeImages = [
   { src: '/images/scientist-centrifuge.png', alt: 'Scientist with centrifuge' },
 ];
 
+const learningPathways = [
+  {
+    title: 'AAS Machine',
+    description: 'Learn atomic absorption principles, parts, techniques, calibration thinking, SOP workflow, and safety precautions.',
+    href: '/aas/menu',
+    icon: FlaskConical,
+    accent: 'from-blue-600 to-purple-600',
+  },
+  {
+    title: 'Centrifuge Machine',
+    description: 'Learn centrifugation principles, rotor selection, balancing, RCF/RPM thinking, SOP workflow, and safety precautions.',
+    href: '/centrifuge/menu',
+    icon: RotateCcw,
+    accent: 'from-purple-600 to-indigo-600',
+  },
+];
+
 export default function WelcomePage() {
   return (
-    <div className="min-h-screen flex flex-col lg:flex-row">
-      {/* LEFT PANEL - Deep Blue */}
-      <div className="relative w-full lg:w-[42%] min-h-[50vh] lg:min-h-screen bg-[#1E3A8A] flex flex-col justify-between px-6 sm:px-8 lg:px-10 py-8 lg:py-10 overflow-hidden">
-        {/* Decorative stars */}
-        <Star className="absolute top-6 left-6 w-3 h-3 text-yellow-400 opacity-40 animate-float" />
-        <Star className="absolute top-20 right-8 w-2 h-2 text-yellow-400 opacity-30 animate-float-delayed" />
-        <Star className="absolute bottom-24 left-10 w-2.5 h-2.5 text-purple-400 opacity-30 animate-float" />
+    <div className="min-h-screen bg-white">
+      <div className="relative overflow-hidden">
+        <div className="mx-auto grid min-h-screen max-w-7xl px-4 py-8 sm:px-6 lg:grid-cols-[0.95fr_1.05fr] lg:px-8 lg:py-10">
+          <section className="relative z-10 flex flex-col justify-center">
+            <motion.div
+              initial={{ opacity: 0, y: 18 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+              className="inline-flex w-fit items-center gap-2 rounded-full bg-blue-50 px-4 py-2 text-sm font-semibold text-blue-700 ring-1 ring-blue-100"
+            >
+              <ShieldCheck className="h-4 w-4" />
+              Safety-first laboratory learning
+            </motion.div>
 
-        {/* Decorative circles */}
-        <div className="absolute top-1/4 -right-8 w-24 h-24 rounded-full bg-purple-500/10 pointer-events-none" />
-        <div className="absolute bottom-1/3 -left-6 w-20 h-20 rounded-full bg-blue-400/10 pointer-events-none" />
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.1 }}
+              className="mt-6"
+            >
+              <p className="text-xs font-bold uppercase tracking-[0.35em] text-blue-700">
+                Centraas learning platform
+              </p>
+              <h1 className="mt-4 text-4xl font-black tracking-tight text-slate-950 sm:text-5xl lg:text-6xl">
+                Practical training for AAS and Centrifuge machines
+              </h1>
+              <p className="mt-5 max-w-2xl text-base leading-relaxed text-slate-600 sm:text-lg">
+                A structured educational platform that helps students and laboratory trainees understand equipment principles,
+                operating procedures, safety checks, quizzes, glossary terms, and references before practical laboratory work.
+              </p>
+            </motion.div>
 
-        {/* Top content */}
-        <div className="relative z-10">
-          <motion.p
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.6 }}
-            className="text-white/80 text-xs sm:text-sm font-medium tracking-[0.25em] uppercase"
-          >
-            WELCOME
-          </motion.p>
-        </div>
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.25 }}
+              className="mt-8 flex flex-col gap-3 sm:flex-row"
+            >
+              <Link href="/select-machine">
+                <button className="inline-flex w-full items-center justify-center gap-3 rounded-2xl bg-gradient-to-r from-blue-700 to-purple-600 px-6 py-3.5 text-sm font-bold text-white shadow-lg shadow-blue-900/20 transition hover:-translate-y-0.5 hover:shadow-xl sm:w-auto">
+                  Start learning
+                  <ArrowRight className="h-4 w-4" />
+                </button>
+              </Link>
+              <Link href="/glossary">
+                <button className="inline-flex w-full items-center justify-center gap-2 rounded-2xl bg-white px-6 py-3.5 text-sm font-bold text-slate-800 ring-1 ring-slate-200 transition hover:bg-slate-50 hover:-translate-y-0.5 sm:w-auto">
+                  <BookOpen className="h-4 w-4" />
+                  View glossary
+                </button>
+              </Link>
+            </motion.div>
 
-        {/* Center content */}
-        <div className="relative z-10 flex-1 flex flex-col justify-center py-6">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.2 }}
-          >
-            <p className="text-white/90 text-sm sm:text-base leading-relaxed mb-3">
-              This is a Practical Guide on how to use
-            </p>
-            <h1 className="text-white text-xl sm:text-2xl lg:text-3xl font-bold leading-snug mb-6">
-              Atomic Absorption Spectrophotometre and Centrifuge Machine
-            </h1>
-            <motion.p
-              initial={{ opacity: 0, y: 15 }}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.35 }}
+              className="mt-8"
+            >
+              <LearningObjectives
+                title="Platform learning goals"
+                estimatedTime="Self-paced"
+                objectives={[
+                  'Understand the working principles of AAS and centrifuge machines.',
+                  'Identify major components and explain their functions.',
+                  'Recognize safety checks, SOP workflow, and common hazards.',
+                  'Practice knowledge with quizzes, review, glossary, and references.',
+                ]}
+              />
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.45 }}
+              className="mt-6"
+            >
+              <SafetyDisclaimer />
+            </motion.div>
+          </section>
+
+          <section className="relative z-10 mt-10 flex flex-col justify-center lg:mt-0">
+            <div className="grid grid-cols-2 gap-3 sm:gap-4">
+              {welcomeImages.map((img, index) => (
+                <motion.div
+                  key={img.src}
+                  initial={{ opacity: 0, scale: 0.92 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.5, delay: 0.2 + index * 0.12 }}
+                  className="relative aspect-square overflow-hidden rounded-3xl bg-white shadow-lg ring-1 ring-slate-200"
+                >
+                  <Image
+                    src={img.src}
+                    alt={img.alt}
+                    fill
+                    className="object-cover transition duration-500 hover:scale-105"
+                    sizes="(max-width: 1024px) 45vw, 28vw"
+                  />
+                </motion.div>
+              ))}
+            </div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.5 }}
-              className="text-white/70 text-xs sm:text-sm leading-relaxed max-w-md"
+              className="mt-5 grid gap-3 sm:grid-cols-2"
             >
-              This platform is designed to enhance students&apos; learning flexibility and deepen their understanding of how to operate laboratory equipment such as the Atomic Absorption Spectrophotometer (AAS) and the Centrifuge machine. It provides comprehensive explanations of how these machines function, alongside interactive learning materials. In addition, the platform includes practical assessment questions that help evaluate and reinforce students&apos; knowledge and understanding of the equipment.
-            </motion.p>
-          </motion.div>
-        </div>
-
-        {/* Continue button */}
-        <div className="relative z-10">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.7 }}
-          >
-            <Link href="/select-machine">
-              <button className="inline-flex items-center gap-3 px-8 py-3 rounded-xl bg-gradient-to-r from-[#7C3AED] to-[#6D28D9] text-white text-sm sm:text-base font-medium hover:from-[#6D28D9] hover:to-[#5B21B6] transition-all duration-300 shadow-lg shadow-purple-500/25 hover:shadow-purple-500/40 hover:scale-[1.02]">
-                Continue
-                <ArrowRight className="w-4 h-4" />
-              </button>
-            </Link>
-          </motion.div>
-        </div>
-      </div>
-
-      {/* RIGHT PANEL - Light Purple Gradient */}
-      <div className="relative w-full lg:w-[58%] min-h-[50vh] lg:min-h-screen bg-gradient-to-br from-[#EDE7F6] via-[#F3E8FF] to-[#E8D5F5] flex flex-col items-center justify-center px-6 sm:px-8 lg:px-12 py-8 lg:py-10 overflow-hidden">
-        {/* Decorative bubbles */}
-        <div className="absolute top-10 right-10 w-32 h-32 rounded-full bg-purple-300/20 pointer-events-none animate-float" />
-        <div className="absolute bottom-16 left-8 w-24 h-24 rounded-full bg-blue-300/15 pointer-events-none animate-float-delayed" />
-        <div className="absolute top-1/3 left-4 w-16 h-16 rounded-full bg-purple-200/20 pointer-events-none" />
-        <div className="absolute bottom-1/3 right-6 w-20 h-20 rounded-full bg-indigo-200/15 pointer-events-none animate-float" />
-
-        {/* Image grid 2x2 */}
-        <div className="grid grid-cols-2 gap-3 sm:gap-4 lg:gap-5 max-w-lg w-full relative z-10">
-          {welcomeImages.map((img, index) => (
-            <motion.div
-              key={img.src}
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.5, delay: 0.3 + index * 0.15 }}
-              className="relative aspect-square rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300 bg-white"
-            >
-              <Image
-                src={img.src}
-                alt={img.alt}
-                fill
-                className="object-cover hover:scale-105 transition-transform duration-500"
-                sizes="(max-width: 1024px) 45vw, 25vw"
-              />
-              {/* White border overlay for clean look */}
-              <div className="absolute inset-0 rounded-2xl ring-1 ring-white/50 pointer-events-none" />
+              {learningPathways.map((pathway) => {
+                const Icon = pathway.icon;
+                return (
+                  <Link key={pathway.title} href={pathway.href} className="group">
+                    <div className="h-full rounded-3xl border border-slate-200 bg-white p-5 shadow-sm transition hover:-translate-y-1 hover:shadow-xl">
+                      <div className={`flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br ${pathway.accent} text-white shadow-md`}>
+                        <Icon className="h-5 w-5" />
+                      </div>
+                      <h2 className="mt-4 text-lg font-bold text-slate-950">{pathway.title}</h2>
+                      <p className="mt-2 text-sm leading-relaxed text-slate-600">{pathway.description}</p>
+                      <div className="mt-4 flex items-center gap-2 text-sm font-bold text-blue-700">
+                        Enter module
+                        <ArrowRight className="h-4 w-4 transition group-hover:translate-x-1" />
+                      </div>
+                    </div>
+                  </Link>
+                );
+              })}
             </motion.div>
-          ))}
+          </section>
         </div>
+
+        <Star className="absolute left-10 top-20 h-3 w-3 text-yellow-400 opacity-50" />
+        <Star className="absolute right-16 top-32 h-2.5 w-2.5 text-purple-400 opacity-40" />
+        <Star className="absolute bottom-28 left-1/4 h-2.5 w-2.5 text-blue-400 opacity-40" />
+        <div className="absolute -right-24 top-20 h-72 w-72 rounded-full bg-purple-300/20 blur-3xl" />
+        <div className="absolute -left-24 bottom-20 h-72 w-72 rounded-full bg-blue-300/20 blur-3xl" />
       </div>
     </div>
   );

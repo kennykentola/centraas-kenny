@@ -3,6 +3,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
+import LearningObjectives from '@/components/phase-one/learning-objectives';
 import {
   ArrowLeft, Star, Sparkles, BookOpen, Layers,
   FlaskConical, ClipboardList, Play, HelpCircle, Home,
@@ -80,6 +81,17 @@ export default function CentrifugeMenuPage() {
               <div className="h-px w-10 bg-gradient-to-l from-transparent to-purple-300" />
             </div>
           </motion.div>
+          <div className="mx-auto mt-5 max-w-4xl text-left">
+            <LearningObjectives
+              estimatedTime="Self-paced"
+              objectives={[
+                'Explain how centrifugal force separates mixtures by density and mass.',
+                'Identify centrifuge components, rotor types, and safe operating limits.',
+                'Apply RCF/RPM thinking and tube-balancing principles.',
+                'Use SOP, quiz, glossary, and references to prepare for supervised practical work.',
+              ]}
+            />
+          </div>
         </div>
 
         {/* Menu Grid - full width */}

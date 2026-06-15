@@ -4,6 +4,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { ArrowLeft, Star } from 'lucide-react';
+import LearningObjectives from '@/components/phase-one/learning-objectives';
 
 export default function AASOverviewPage() {
   return (
@@ -45,6 +46,16 @@ export default function AASOverviewPage() {
 
       {/* Content */}
       <div className="relative z-10 px-5 sm:px-8 pb-12 max-w-4xl mx-auto">
+        <LearningObjectives
+          estimatedTime="10-15 minutes"
+          objectives={[
+            'Define AAS and distinguish it from the AAS instrument.',
+            'Explain why free atoms absorb element-specific wavelengths.',
+            'Identify common fields where AAS is used.',
+            'Recognize that practical AAS work requires SOPs and supervision.',
+          ]}
+        />
+
         {/* First image - full width */}
         <motion.div
           initial={{ opacity: 0, y: 15 }}

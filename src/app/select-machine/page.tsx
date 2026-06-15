@@ -3,7 +3,8 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { ArrowLeft, Star } from 'lucide-react';
+import { ArrowLeft, BookOpen, ShieldCheck, Star } from 'lucide-react';
+import SafetyDisclaimer from '@/components/phase-one/safety-disclaimer';
 
 const machines = [
   {
@@ -45,7 +46,7 @@ export default function SelectMachinePage() {
       </div>
 
       {/* Title */}
-      <div className="relative z-10 px-5 sm:px-8 pt-6 sm:pt-8 pb-6 sm:pb-10">
+      <div className="relative z-10 px-5 sm:px-8 pt-6 sm:pt-8 pb-4 sm:pb-8">
         <motion.h1
           initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
@@ -54,6 +55,14 @@ export default function SelectMachinePage() {
         >
           Select Machine to Learn
         </motion.h1>
+        <motion.p
+          initial={{ opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.18 }}
+          className="mx-auto mt-3 max-w-2xl text-center text-sm leading-relaxed text-slate-600"
+        >
+          Choose a learning pathway with structured lessons, SOP guidance, quizzes, glossary support, and safety-first reminders.
+        </motion.p>
       </div>
 
       {/* Machine cards */}
@@ -90,6 +99,23 @@ export default function SelectMachinePage() {
           ))}
         </div>
       </div>
+
+      <motion.div
+        initial={{ opacity: 0, y: 18 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, delay: 0.35 }}
+        className="relative z-10 px-5 sm:px-8 pb-10"
+      >
+        <div className="mx-auto grid max-w-2xl gap-3 sm:grid-cols-2">
+          <SafetyDisclaimer compact />
+          <Link href="/glossary">
+            <div className="flex h-full items-center gap-3 rounded-2xl border border-blue-100 bg-blue-50 p-3 text-sm font-semibold text-blue-800 transition hover:bg-blue-100">
+              <BookOpen className="h-5 w-5 shrink-0" />
+              Open glossary and references
+            </div>
+          </Link>
+        </div>
+      </motion.div>
     </div>
   );
 }

@@ -3,6 +3,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
+import LearningObjectives from '@/components/phase-one/learning-objectives';
 import {
   ArrowLeft, Star, Sparkles, BookOpen, FlaskConical, Layers,
   ClipboardList, Play, HelpCircle, Lightbulb, Home,
@@ -80,6 +81,17 @@ export default function AASMenuPage() {
               <div className="h-px w-10 bg-gradient-to-l from-transparent to-purple-300" />
             </div>
           </motion.div>
+          <div className="mx-auto mt-5 max-w-4xl text-left">
+            <LearningObjectives
+              estimatedTime="Self-paced"
+              objectives={[
+                'Explain the basic principle of atomic absorption spectroscopy.',
+                'Identify major AAS components and describe their functions.',
+                'Recognize safe operating procedures and common hazards.',
+                'Use quizzes, glossary, and references to reinforce learning.',
+              ]}
+            />
+          </div>
         </div>
 
         {/* Menu Grid - full width */}

@@ -4,6 +4,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { ArrowLeft, Star } from 'lucide-react';
+import LearningObjectives from '@/components/phase-one/learning-objectives';
 
 export default function CentrifugeOverviewPage() {
   return (
@@ -45,6 +46,15 @@ export default function CentrifugeOverviewPage() {
 
       {/* Content */}
       <div className="relative z-10 px-5 sm:px-8 pb-12 max-w-4xl mx-auto">
+        <LearningObjectives
+          estimatedTime="10-15 minutes"
+          objectives={[
+            'Explain how centrifugation separates materials by density, mass, and particle size.',
+            'Describe the roles of rotor, motor, lid, brake, and control system.',
+            'Recognize key safety principles such as balancing and speed limits.',
+            'Use glossary and references to prepare for supervised practical work.',
+          ]}
+        />
 
         {/* Hero Image */}
         <motion.div
