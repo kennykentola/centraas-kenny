@@ -3,7 +3,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { ArrowRight, BookOpen, FlaskConical, RotateCcw, ShieldCheck, Star } from 'lucide-react';
+import { ArrowRight, Award, BookOpen, Calculator, ClipboardCheck, FlaskConical, GraduationCap, RotateCcw, ShieldCheck, Star, Stethoscope } from 'lucide-react';
 import LearningObjectives from '@/components/phase-one/learning-objectives';
 import SafetyDisclaimer from '@/components/phase-one/safety-disclaimer';
 
@@ -161,6 +161,86 @@ export default function WelcomePage() {
             </motion.div>
           </section>
         </div>
+
+        <section className="mx-auto max-w-7xl px-4 pb-10 sm:px-6 lg:px-8">
+          <div className="rounded-3xl border border-slate-200 bg-slate-50 p-5">
+            <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
+              <div>
+                <p className="text-sm font-semibold uppercase tracking-wide text-indigo-600">Phase 2 learning system</p>
+                <h2 className="mt-2 text-2xl font-bold text-slate-950">Track progress, worksheets, certificates, and review summaries</h2>
+                <p className="mt-2 max-w-3xl text-sm leading-relaxed text-slate-600">
+                  Continue your learning path from one dashboard, then use instructor tools for class-level overview.
+                </p>
+              </div>
+              <Link href="/dashboard" className="inline-flex items-center justify-center rounded-2xl bg-indigo-600 px-5 py-3 text-sm font-bold text-white transition hover:bg-indigo-700">
+                Open dashboard
+                <ArrowRight className="ml-2 h-4 w-4" />
+              </Link>
+            </div>
+            <div className="mt-5 grid gap-3 md:grid-cols-2 xl:grid-cols-5">
+              <Link href="/dashboard" className="rounded-2xl bg-white p-4 ring-1 ring-slate-200 transition hover:ring-indigo-200">
+                <GraduationCap className="h-6 w-6 text-indigo-600" />
+                <h3 className="mt-3 font-bold text-slate-950">Dashboard</h3>
+                <p className="mt-1 text-sm leading-relaxed text-slate-600">Progress overview for both modules.</p>
+              </Link>
+              <Link href="/worksheets" className="rounded-2xl bg-white p-4 ring-1 ring-slate-200 transition hover:ring-emerald-200">
+                <ClipboardCheck className="h-6 w-6 text-emerald-600" />
+                <h3 className="mt-3 font-bold text-slate-950">Worksheets</h3>
+                <p className="mt-1 text-sm leading-relaxed text-slate-600">Download practical lab worksheets.</p>
+              </Link>
+              <Link href="/certificates" className="rounded-2xl bg-white p-4 ring-1 ring-slate-200 transition hover:ring-amber-200">
+                <Award className="h-6 w-6 text-amber-600" />
+                <h3 className="mt-3 font-bold text-slate-950">Certificates</h3>
+                <p className="mt-1 text-sm leading-relaxed text-slate-600">Generate completion certificates.</p>
+              </Link>
+              <Link href="/instructor" className="rounded-2xl bg-white p-4 ring-1 ring-slate-200 transition hover:ring-cyan-200">
+                <BookOpen className="h-6 w-6 text-cyan-600" />
+                <h3 className="mt-3 font-bold text-slate-950">Instructor</h3>
+                <p className="mt-1 text-sm leading-relaxed text-slate-600">View demo class performance.</p>
+              </Link>
+              <Link href="/troubleshooting" className="rounded-2xl bg-white p-4 ring-1 ring-slate-200 transition hover:ring-rose-200">
+                <Stethoscope className="h-6 w-6 text-rose-600" />
+                <h3 className="mt-3 font-bold text-slate-950">Troubleshooting</h3>
+                <p className="mt-1 text-sm leading-relaxed text-slate-600">Decision trees for common AAS and centrifuge issues.</p>
+              </Link>
+            </div>
+          </div>
+        </section>
+
+        <section className="mx-auto max-w-7xl px-4 pb-10 sm:px-6 lg:px-8">
+          <div className="rounded-3xl border border-slate-200 bg-slate-50 p-5">
+            <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
+              <div>
+                <p className="text-sm font-semibold uppercase tracking-wide text-emerald-600">Phase 3 tools</p>
+                <h2 className="mt-2 text-2xl font-bold text-slate-950">Calculators and troubleshooting</h2>
+                <p className="mt-2 max-w-3xl text-sm leading-relaxed text-slate-600">
+                  Practice analytical and engineering calculations with guided learning tools.
+                </p>
+              </div>
+              <Link href="/aas/calculators" className="inline-flex items-center justify-center rounded-2xl bg-emerald-600 px-5 py-3 text-sm font-bold text-white transition hover:bg-emerald-700">
+                Open calculators
+                <ArrowRight className="ml-2 h-4 w-4" />
+              </Link>
+            </div>
+            <div className="mt-5 grid gap-3 md:grid-cols-3">
+              <Link href="/aas/calculators" className="rounded-2xl bg-white p-4 ring-1 ring-slate-200 transition hover:ring-indigo-200">
+                <Calculator className="h-6 w-6 text-indigo-600" />
+                <h3 className="mt-3 font-bold text-slate-950">AAS calculations</h3>
+                <p className="mt-1 text-sm leading-relaxed text-slate-600">Beer-Lambert law and calibration curve tools.</p>
+              </Link>
+              <Link href="/centrifuge/calculators" className="rounded-2xl bg-white p-4 ring-1 ring-slate-200 transition hover:ring-emerald-200">
+                <Calculator className="h-6 w-6 text-emerald-600" />
+                <h3 className="mt-3 font-bold text-slate-950">Centrifuge calculations</h3>
+                <p className="mt-1 text-sm leading-relaxed text-slate-600">RCF/RPM converter and tube balance checker.</p>
+              </Link>
+              <Link href="/troubleshooting" className="rounded-2xl bg-white p-4 ring-1 ring-slate-200 transition hover:ring-amber-200">
+                <Stethoscope className="h-6 w-6 text-amber-600" />
+                <h3 className="mt-3 font-bold text-slate-950">Troubleshooting trees</h3>
+                <p className="mt-1 text-sm leading-relaxed text-slate-600">Guided checks for AAS and centrifuge issues.</p>
+              </Link>
+            </div>
+          </div>
+        </section>
 
         <Star className="absolute left-10 top-20 h-3 w-3 text-yellow-400 opacity-50" />
         <Star className="absolute right-16 top-32 h-2.5 w-2.5 text-purple-400 opacity-40" />

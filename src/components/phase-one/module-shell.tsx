@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { BookOpen, ClipboardCheck, FlaskConical, HelpCircle, Home, Layers, PlayCircle } from 'lucide-react';
+import { Award, BookOpen, Calculator, ClipboardCheck, FlaskConical, GraduationCap, HelpCircle, Home, Layers, PlayCircle, ClipboardList, MessageSquare, Stethoscope } from 'lucide-react';
 import SafetyDisclaimer from './safety-disclaimer';
 
 type ModuleType = 'aas' | 'centrifuge';
@@ -19,6 +19,7 @@ const navItems: Record<ModuleType, NavItem[]> = {
         { title: 'Parts', href: '/aas/parts', icon: Layers },
         { title: 'Techniques', href: '/aas/techniques', icon: FlaskConical },
         { title: 'Types', href: '/aas/types', icon: Layers },
+        { title: 'Calculators', href: '/aas/calculators', icon: Calculator },
         { title: 'SOP', href: '/aas/sop', icon: ClipboardCheck },
         { title: 'Quiz', href: '/aas/quiz', icon: HelpCircle },
         { title: 'Video', href: '/aas/video', icon: PlayCircle },
@@ -28,6 +29,7 @@ const navItems: Record<ModuleType, NavItem[]> = {
         { title: 'Parts', href: '/centrifuge/parts', icon: Layers },
         { title: 'Types', href: '/centrifuge/types', icon: Layers },
         { title: 'Techniques', href: '/centrifuge/techniques', icon: FlaskConical },
+        { title: 'Calculators', href: '/centrifuge/calculators', icon: Calculator },
         { title: 'SOP', href: '/centrifuge/sop', icon: ClipboardCheck },
         { title: 'Quiz', href: '/centrifuge/quiz', icon: HelpCircle },
         { title: 'Video', href: '/centrifuge/video', icon: PlayCircle },
@@ -50,6 +52,11 @@ const breadcrumbLabels: Record<string, string> = {
     review: 'Review',
     video: 'Video',
     menu: 'Menu',
+    'learning-path': 'Learning path',
+    certificate: 'Certificate',
+    worksheet: 'Worksheet',
+    'review-summary': 'Review summary',
+    calculators: 'Calculators',
 };
 
 function getModuleFromPath(pathname: string): ModuleType | null {
@@ -118,6 +125,74 @@ export default function ModuleShell({ children }: { children: React.ReactNode })
                         );
                     })}
 
+                    <div className="mt-4 rounded-2xl bg-slate-50 p-3">
+                        <p className="text-xs font-bold uppercase tracking-wide text-slate-500">Phase 2 learning</p>
+                        <Link
+                            href={`/${module}/learning-path`}
+                            className={`mt-2 flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium ${pathname === `/${module}/learning-path`
+                                ? 'bg-blue-50 text-blue-700'
+                                : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900'
+                                }`}
+                        >
+                            <BookOpen className="h-4 w-4" />
+                            Learning path
+                        </Link>
+                        <Link
+                            href={`/${module}/worksheet`}
+                            className={`mt-1 flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium ${pathname === `/${module}/worksheet`
+                                ? 'bg-blue-50 text-blue-700'
+                                : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900'
+                                }`}
+                        >
+                            <ClipboardList className="h-4 w-4" />
+                            Worksheet
+                        </Link>
+                        <Link
+                            href={`/${module}/certificate`}
+                            className={`mt-1 flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium ${pathname === `/${module}/certificate`
+                                ? 'bg-blue-50 text-blue-700'
+                                : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900'
+                                }`}
+                        >
+                            <Award className="h-4 w-4" />
+                            Certificate
+                        </Link>
+                        <Link
+                            href={`/${module}/review-summary`}
+                            className={`mt-1 flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium ${pathname === `/${module}/review-summary`
+                                ? 'bg-blue-50 text-blue-700'
+                                : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900'
+                                }`}
+                        >
+                            <GraduationCap className="h-4 w-4" />
+                            Review summary
+                        </Link>
+                    </div>
+
+                    <div className="mt-4 rounded-2xl bg-slate-50 p-3">
+                        <p className="text-xs font-bold uppercase tracking-wide text-slate-500">Phase 3 tools</p>
+                        <Link
+                            href={`/${module}/calculators`}
+                            className={`mt-2 flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium ${pathname === `/${module}/calculators`
+                                ? 'bg-blue-50 text-blue-700'
+                                : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900'
+                                }`}
+                        >
+                            <Calculator className="h-4 w-4" />
+                            Calculators
+                        </Link>
+                        <Link
+                            href="/troubleshooting"
+                            className={`mt-1 flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium ${pathname === '/troubleshooting'
+                                ? 'bg-blue-50 text-blue-700'
+                                : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900'
+                                }`}
+                        >
+                            <Stethoscope className="h-4 w-4" />
+                            Troubleshooting
+                        </Link>
+                    </div>
+
                     <div className="mt-4 border-t border-slate-200 pt-3">
                         <Link
                             href="/glossary"
@@ -138,6 +213,16 @@ export default function ModuleShell({ children }: { children: React.ReactNode })
                         >
                             <BookOpen className="h-4 w-4" />
                             References
+                        </Link>
+                        <Link
+                            href="/ai-tutor"
+                            className={`mt-1 flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium ${pathname === '/ai-tutor'
+                                ? 'bg-blue-50 text-blue-700'
+                                : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900'
+                                }`}
+                        >
+                            <MessageSquare className="h-4 w-4" />
+                            AI tutor
                         </Link>
                     </div>
                 </nav>
