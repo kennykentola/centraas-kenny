@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { createClient } from '@/lib/supabase/server';
 
 type GeminiCandidate = {
     content?: {
@@ -26,8 +27,7 @@ export async function POST(request: NextRequest) {
         if (!apiKey) {
             return NextResponse.json(
                 {
-                    answer:
-                        'Gemini API key is not configured. Add GEMINI_API_KEY to your .env.local file, then redeploy.',
+                    answer: 'AI tutor is not available yet. Please check back later.',
                     fallback: true,
                 },
                 { status: 503 },
@@ -84,6 +84,18 @@ export async function POST(request: NextRequest) {
                 },
                 { status: 502 },
             );
+        }
+
+        const supabase = await createClient();
+        const { data: sessionData } = await supabase.auth.getSession();
+        const userId = sessionData.session?.user.id;
+
+        if (process.env.NEXT_PUBLIC_SUPABASE_URL && process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY && userId) {
+            await supabase.from('ai_tutor_messages').insert({
+                user_id: userId,
+                question,
+                answer,
+            });
         }
 
         return NextResponse.json({ answer });

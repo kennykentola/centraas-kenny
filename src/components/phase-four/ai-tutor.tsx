@@ -16,7 +16,7 @@ export function AiTutor() {
         {
             id: 1,
             role: 'assistant',
-            text: 'Ask me anything about AAS, centrifuge operation, calculations, SOPs, safety, or troubleshooting. I am connected to the Gemini API when GEMINI_API_KEY is configured.',
+            text: 'Ask me anything about AAS, centrifuge operation, calculations, SOPs, safety, or troubleshooting. If you are signed in, your AI tutor history can be saved to Supabase.',
         },
     ]);
 
