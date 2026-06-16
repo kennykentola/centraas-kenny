@@ -27,6 +27,7 @@ yarn-error.log*
 .env.local.example
 .env
 SUPABASE_SETUP.md
+SUPABASE_AUTH_PLAN.md
 
 # vercel
 .vercel
