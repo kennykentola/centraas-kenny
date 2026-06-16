@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import { AuthButton } from "@/components/auth-button";
 import { Toaster } from "@/components/ui/toaster";
+import { useProfileSync } from '@/hooks/use-profile-sync';
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://centraas-kennykentola.netlify.app'),
@@ -52,6 +54,12 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className="antialiased bg-background text-foreground">
+        <div className="sticky top-0 z-[60] border-b border-white/10 bg-slate-950/90 px-4 py-2 backdrop-blur">
+          <div className="mx-auto flex max-w-7xl items-center justify-between gap-3 text-xs text-slate-200">
+            <span>Safety-first AAS and centrifuge learning</span>
+            <AuthButton />
+          </div>
+        </div>
         {children}
         <Toaster />
       </body>
