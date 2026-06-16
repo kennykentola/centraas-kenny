@@ -14,6 +14,7 @@ export default function LoginPage() {
     const [mode, setMode] = useState<'sign-in' | 'sign-up'>('sign-in');
     const [message, setMessage] = useState('');
     const [loading, setLoading] = useState(false);
+    const [resending, setResending] = useState(false);
 
     const supabase = createClient();
 
