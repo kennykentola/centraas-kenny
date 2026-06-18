@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import { ProgressCard } from '@/components/phase-two/progress-card';
-import { Award, BookOpen, Calculator, ClipboardCheck, GraduationCap, Stethoscope, Users } from 'lucide-react';
+import { Award, BookOpen, Calculator, ClipboardCheck, GraduationCap, KeyRound, ShieldCheck, Stethoscope, User, Users } from 'lucide-react';
 
 export const metadata: Metadata = {
     title: 'Learning Dashboard | Centraas',
@@ -55,7 +55,7 @@ export default function DashboardPage() {
                 </Link>
             </section>
 
-            <section className="grid gap-4 md:grid-cols-2">
+            <section className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
                 <Link href="/aas/calculators" className="rounded-3xl border border-slate-200 bg-white p-5 shadow-sm transition hover:border-indigo-200 hover:bg-indigo-50/40">
                     <Calculator className="h-8 w-8 text-indigo-600" />
                     <h2 className="mt-4 text-lg font-bold text-slate-950">AAS calculators</h2>
@@ -70,6 +70,26 @@ export default function DashboardPage() {
                     <Stethoscope className="h-8 w-8 text-amber-600" />
                     <h2 className="mt-4 text-lg font-bold text-slate-950">Troubleshooting trees</h2>
                     <p className="mt-2 text-sm leading-relaxed text-slate-600">Guided checks for AAS calibration/signal and centrifuge vibration/separation issues.</p>
+                </Link>
+                <Link href="/profile" className="rounded-3xl border border-slate-200 bg-white p-5 shadow-sm transition hover:border-violet-200 hover:bg-violet-50/40">
+                    <User className="h-8 w-8 text-violet-600" />
+                    <h2 className="mt-4 text-lg font-bold text-slate-950">Profile</h2>
+                    <p className="mt-2 text-sm leading-relaxed text-slate-600">Update your name and institution.</p>
+                </Link>
+                <Link href="/reset-password" className="rounded-3xl border border-slate-200 bg-white p-5 shadow-sm transition hover:border-slate-200 hover:bg-slate-50/40">
+                    <KeyRound className="h-8 w-8 text-slate-700" />
+                    <h2 className="mt-4 text-lg font-bold text-slate-950">Reset password</h2>
+                    <p className="mt-2 text-sm leading-relaxed text-slate-600">Send a password reset email.</p>
+                </Link>
+                <Link href="/instructor" className="rounded-3xl border border-slate-200 bg-white p-5 shadow-sm transition hover:border-cyan-200 hover:bg-cyan-50/40">
+                    <ShieldCheck className="h-8 w-8 text-cyan-600" />
+                    <h2 className="mt-4 text-lg font-bold text-slate-950">Instructor dashboard</h2>
+                    <p className="mt-2 text-sm leading-relaxed text-slate-600">View student progress and scores.</p>
+                </Link>
+                <Link href="/admin" className="rounded-3xl border border-slate-200 bg-white p-5 shadow-sm transition hover:border-slate-200 hover:bg-slate-50/40">
+                    <Users className="h-8 w-8 text-slate-700" />
+                    <h2 className="mt-4 text-lg font-bold text-slate-950">Admin dashboard</h2>
+                    <p className="mt-2 text-sm leading-relaxed text-slate-600">Manage student, instructor, and admin roles.</p>
                 </Link>
             </section>
 
