@@ -35,10 +35,12 @@ export default function LoginPage() {
         setMessage('');
 
         if (mode === 'sign-up') {
+            const redirectToUrl = typeof window !== 'undefined' ? `${window.location.origin}/dashboard` : undefined;
             const { error } = await supabase.auth.signUp({
                 email,
                 password,
                 options: {
+                    emailRedirectTo: redirectToUrl,
                     data: {
                         full_name: fullName,
                         institution,
