@@ -21,11 +21,13 @@ export function useProfileSync() {
             const fullName = user.user_metadata?.full_name as string | undefined;
             const institution = user.user_metadata?.institution as string | undefined;
 
+            const { data: existing } = await supabase.from('profiles').select('role').eq('id', user.id).single();
+
             await supabase.from('profiles').upsert({
                 id: user.id,
                 full_name: fullName ?? user.email,
                 institution: institution ?? null,
-                role: 'student',
+                role: existing?.role ?? 'student',
             });
         };
 
@@ -33,11 +35,13 @@ export function useProfileSync() {
 
         const { data: subscription } = supabase.auth.onAuthStateChange((event, session) => {
             if (event === 'SIGNED_IN' && session) {
-                supabase.from('profiles').upsert({
-                    id: session.user.id,
-                    full_name: (session.user.user_metadata?.full_name as string | undefined) ?? session.user.email,
-                    institution: (session.user.user_metadata?.institution as string | undefined) ?? null,
-                    role: 'student',
+                supabase.from('profiles').select('role').eq('id', session.user.id).single().then(({ data: existing }) => {
+                    supabase.from('profiles').upsert({
+                        id: session.user.id,
+                        full_name: (session.user.user_metadata?.full_name as string | undefined) ?? session.user.email,
+                        institution: (session.user.user_metadata?.institution as string | undefined) ?? null,
+                        role: existing?.role ?? 'student',
+                    });
                 });
             }
         });
