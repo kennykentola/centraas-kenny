@@ -35,7 +35,7 @@ export default function LoginPage() {
         setMessage('');
 
         if (mode === 'sign-up') {
-            const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? window.location.origin;
+            const siteUrl = window.location.origin.replace(/\/$/, '');
             const redirectToUrl = `${siteUrl}/dashboard`;
             const { error } = await supabase.auth.signUp({
                 email,
