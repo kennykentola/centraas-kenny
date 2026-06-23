@@ -1,10 +1,11 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Download, Award, ShieldCheck } from 'lucide-react';
 import type { MachineModule } from '@/data/learning-paths';
 import { getLearningPath, getMachineLabel } from '@/data/learning-paths';
 import { useLearningProgress } from '@/hooks/use-learning-progress';
+import { createClient } from '@/lib/supabase/client';
 
 interface CertificateGeneratorProps {
     module: MachineModule;
@@ -24,6 +25,46 @@ export function CertificateGenerator({ module }: CertificateGeneratorProps) {
     const [institutionName, setInstitutionName] = useState('');
     const [certificateId, setCertificateId] = useState('');
     const [generatedAt, setGeneratedAt] = useState('');
+    const [saving, setSaving] = useState(false);
+
+    // On mount, try to restore a previously generated certificate from Supabase.
+    useEffect(() => {
+        if (!path) return;
+        (async () => {
+            const supabase = createClient();
+            if (!supabase) return;
+
+            const { data: sessionData } = await supabase.auth.getSession();
+            const userId = sessionData.session?.user.id;
+            if (!userId) return;
+
+            // Pre-fill student name from profile.
+            const { data: profile } = await supabase
+                .from('profiles')
+                .select('full_name, institution')
+                .eq('id', userId)
+                .single();
+            if (profile) {
+                if (profile.full_name && !studentName) setStudentName(profile.full_name);
+                if (profile.institution && !institutionName) setInstitutionName(profile.institution ?? '');
+            }
+
+            // Restore latest certificate for this module.
+            const { data: cert } = await supabase
+                .from('certificates')
+                .select('certificate_id, issued_at')
+                .eq('user_id', userId)
+                .eq('module', module)
+                .order('issued_at', { ascending: false })
+                .limit(1)
+                .maybeSingle();
+
+            if (cert) {
+                setCertificateId(cert.certificate_id);
+                setGeneratedAt(new Date(cert.issued_at).toLocaleString());
+            }
+        })();
+    }, [module, path, studentName, institutionName]);
 
     if (!path) return null;
 
@@ -31,10 +72,38 @@ export function CertificateGenerator({ module }: CertificateGeneratorProps) {
     const hasPassedQuiz = latestScore >= path.passingScore;
     const ready = summary.completedLessons === summary.totalLessons && hasPassedQuiz && studentName.trim().length > 0;
 
-    const handleGenerate = () => {
+    const handleGenerate = async () => {
         const id = createCertificateId(module);
+        const issuedAt = new Date().toLocaleString();
         setCertificateId(id);
-        setGeneratedAt(new Date().toLocaleString());
+        setGeneratedAt(issuedAt);
+
+        // Persist to Supabase if a session exists.
+        setSaving(true);
+        try {
+            const supabase = createClient();
+            if (supabase) {
+                const { data: sessionData } = await supabase.auth.getSession();
+                const userId = sessionData.session?.user.id;
+                if (userId) {
+                    await supabase.from('certificates').insert({
+                        user_id: userId,
+                        module,
+                        student_name: studentName,
+                        score: latestScore,
+                        certificate_id: id,
+                        issued_at: new Date().toISOString(),
+                        metadata: {
+                            institution: institutionName || null,
+                            path_title: path.title,
+                            passing_score: path.passingScore,
+                        },
+                    });
+                }
+            }
+        } finally {
+            setSaving(false);
+        }
     };
 
     const handleDownload = () => {
@@ -72,7 +141,7 @@ export function CertificateGenerator({ module }: CertificateGeneratorProps) {
                         <p className="text-sm font-semibold uppercase tracking-wide text-indigo-600">Certificate readiness</p>
                         <h2 className="mt-2 text-2xl font-bold text-slate-950">{getMachineLabel(module)} completion certificate</h2>
                         <p className="mt-2 text-sm leading-relaxed text-slate-600">
-                            Generate a plain-text certificate after completing all lessons and meeting the quiz passing score.
+                            Generate a certificate after completing all lessons and meeting the quiz passing score.
                         </p>
                     </div>
                     <Award className="h-10 w-10 text-indigo-600" />
@@ -139,11 +208,11 @@ export function CertificateGenerator({ module }: CertificateGeneratorProps) {
                     </label>
                     <button
                         onClick={handleGenerate}
-                        disabled={!ready || Boolean(certificateId)}
+                        disabled={!ready || Boolean(certificateId) || saving}
                         className="w-full rounded-xl bg-indigo-600 px-4 py-3 text-sm font-bold text-white transition hover:bg-indigo-700 disabled:cursor-not-allowed disabled:bg-slate-300"
                     >
                         <Download className="inline-block h-4 w-4 align-[-2px] mr-2" />
-                        {certificateId ? 'Certificate generated' : 'Generate certificate'}
+                        {saving ? 'Saving…' : certificateId ? 'Certificate generated' : 'Generate certificate'}
                     </button>
                     <button
                         onClick={handleDownload}
