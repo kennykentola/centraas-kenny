@@ -44,14 +44,14 @@ export default function MotorDetail() {
 
       {/* ── Decorative floating circles ── */}
       <div className="absolute top-20 right-10 w-32 h-32 rounded-full bg-[#7C3AED]/10 animate-float pointer-events-none" />
-      <div className="absolute top-60 left-6 w-20 h-20 rounded-full bg-[#4169E1]/10 animate-float pointer-events-none" style={{ animationDelay: '1s' }} />
-      <div className="absolute bottom-40 right-16 w-24 h-24 rounded-full bg-[#7C3AED]/8 animate-float pointer-events-none" style={{ animationDelay: '2s' }} />
+      <div className="absolute top-60 left-6 w-20 h-20 rounded-full bg-[#4169E1]/10 animate-float pointer-events-none [animation-delay:1s]" />
+      <div className="absolute bottom-40 right-16 w-24 h-24 rounded-full bg-[#7C3AED]/8 animate-float pointer-events-none [animation-delay:2s]" />
 
       {/* ── Decorative stars ── */}
       <Star className="absolute top-28 left-1/4 w-4 h-4 text-[#7C3AED]/30 animate-float" />
-      <Star className="absolute top-44 right-1/3 w-3 h-3 text-[#4169E1]/25 animate-float" style={{ animationDelay: '0.5s' }} />
-      <Star className="absolute top-72 left-[15%] w-5 h-5 text-[#7C3AED]/20 animate-float" style={{ animationDelay: '1.5s' }} />
-      <Star className="absolute bottom-60 right-[10%] w-4 h-4 text-[#4169E1]/20 animate-float" style={{ animationDelay: '2.5s' }} />
+      <Star className="absolute top-44 right-1/3 w-3 h-3 text-[#4169E1]/25 animate-float [animation-delay:0.5s]" />
+      <Star className="absolute top-72 left-[15%] w-5 h-5 text-[#7C3AED]/20 animate-float [animation-delay:1.5s]" />
+      <Star className="absolute bottom-60 right-[10%] w-4 h-4 text-[#4169E1]/20 animate-float [animation-delay:2.5s]" />
 
       {/* ── Main content ── */}
       <div className="max-w-4xl mx-auto px-5 sm:px-8 pb-12 pt-24 relative z-10">

@@ -20,16 +20,23 @@ const staggerContainer = {
 };
 
 function FloatingDecoration({ className, size = 20 }: { className: string; size?: number }) {
+  const sizeClasses: Record<number, string> = {
+    40: 'w-10 h-10',
+    34: 'w-[34px] h-[34px]',
+    28: 'w-7 h-7',
+    24: 'w-6 h-6',
+    20: 'w-5 h-5',
+    18: 'w-[18px] h-[18px]',
+  };
+  const sizeClass = sizeClasses[size] || 'w-5 h-5';
+
   return (
     <motion.div
       className={`absolute rounded-full animate-float ${className}`}
       animate={{ y: [0, -12, 0] }}
       transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
     >
-      <div
-        className="rounded-full opacity-30"
-        style={{ width: size, height: size }}
-      />
+      <div className={`rounded-full opacity-30 ${sizeClass}`} />
     </motion.div>
   );
 }

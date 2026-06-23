@@ -9,6 +9,35 @@ interface ProgressCardProps {
     module: MachineModule;
 }
 
+function getProgressWidthClass(percentage: number): string {
+    const clamped = Math.max(0, Math.min(100, percentage));
+    const rounded = Math.round(clamped / 5) * 5;
+    const widthMap: Record<number, string> = {
+        0: 'w-0',
+        5: 'w-[5%]',
+        10: 'w-[10%]',
+        15: 'w-[15%]',
+        20: 'w-[20%]',
+        25: 'w-[25%]',
+        30: 'w-[30%]',
+        35: 'w-[35%]',
+        40: 'w-[40%]',
+        45: 'w-[45%]',
+        50: 'w-[50%]',
+        55: 'w-[55%]',
+        60: 'w-[60%]',
+        65: 'w-[65%]',
+        70: 'w-[70%]',
+        75: 'w-[75%]',
+        80: 'w-[80%]',
+        85: 'w-[85%]',
+        90: 'w-[90%]',
+        95: 'w-[95%]',
+        100: 'w-full',
+    };
+    return widthMap[rounded] || 'w-0';
+}
+
 export function ProgressCard({ module }: ProgressCardProps) {
     const path = getLearningPath(module);
     const { summary } = useLearningProgress(module);
@@ -45,7 +74,7 @@ export function ProgressCard({ module }: ProgressCardProps) {
                 </div>
             </div>
             <div className="mt-5 h-3 overflow-hidden rounded-full bg-slate-100">
-                <div className="h-full rounded-full bg-gradient-to-r from-indigo-600 to-cyan-500" style={{ width: `${summary.completionPercentage}%` }} />
+                <div className={`h-full rounded-full bg-gradient-to-r from-indigo-600 to-cyan-500 ${getProgressWidthClass(summary.completionPercentage)}`} />
             </div>
             <div className="mt-5 flex flex-wrap gap-3">
                 <Link href={`/${module}/learning-path`} className="rounded-xl bg-indigo-600 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-indigo-700">
