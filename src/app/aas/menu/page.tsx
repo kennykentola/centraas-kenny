@@ -17,6 +17,7 @@ const menuItems = [
   { title: 'Standard Operation Procedure for AAS Machine', href: '/aas/sop', icon: ClipboardList },
   { title: 'Watch a video', href: '/aas/video', icon: Play },
   { title: 'Types of AAS Machine and their Techniques', href: '/aas/types', icon: FlaskConical },
+  { title: 'Assignments', href: '/aas/assignments', icon: ClipboardList },
 ];
 
 const menuImages = [
@@ -124,7 +125,7 @@ export default function AASMenuPage() {
             <motion.div
               initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.35, delay: 0.15 + 7 * 0.05 }}
+              transition={{ duration: 0.35, delay: 0.15 + 8 * 0.05 }}
             >
               <Link href="/select-machine" className="block group">
                 <div className="relative bg-white rounded-xl border border-red-100 px-3 py-4 sm:px-4 sm:py-5 hover:border-red-300 hover:shadow-lg hover:shadow-red-500/8 transition-all duration-300 hover:-translate-y-0.5 overflow-hidden">

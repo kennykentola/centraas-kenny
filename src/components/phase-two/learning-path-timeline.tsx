@@ -5,14 +5,58 @@ import { CheckCircle2, Clock, BookOpen, ClipboardCheck, AlertTriangle } from 'lu
 import type { MachineModule } from '@/data/learning-paths';
 import { getLearningPath } from '@/data/learning-paths';
 import { useLearningProgress } from '@/hooks/use-learning-progress';
+import { useEffect, useState } from 'react';
+import { createClient } from '@/lib/supabase/client';
 
 interface LearningPathTimelineProps {
     module: MachineModule;
 }
 
 export function LearningPathTimeline({ module }: LearningPathTimelineProps) {
-    const path = getLearningPath(module);
+    const defaultPath = getLearningPath(module);
+    const [path, setPath] = useState(defaultPath);
     const { progress, actions } = useLearningProgress(module);
+
+    useEffect(() => {
+        let mounted = true;
+        async function fetchLessons() {
+            const supabase = createClient();
+            if (!supabase) return;
+            
+            const { data, error } = await supabase
+                .from('lessons')
+                .select('*')
+                .eq('module', module)
+                .eq('published', true)
+                .order('created_at', { ascending: true });
+                
+            if (error || !data || !mounted) return;
+            
+            // Map DB lessons to the expected format
+            const dbLessons = data.map(dbLesson => ({
+                id: dbLesson.id,
+                title: dbLesson.title,
+                description: dbLesson.description || '',
+                difficulty: 'Intermediate' as const, // Default for now
+                estimatedMinutes: 30, // Default for now
+                objectives: Array.isArray(dbLesson.objectives) ? dbLesson.objectives : [],
+                safetyNotes: Array.isArray(dbLesson.safety_notes) ? dbLesson.safety_notes : [],
+                href: `/${module}/lesson/${dbLesson.id}`, // Custom routing can be added later
+                worksheetTitle: `${dbLesson.title} Worksheet`,
+                worksheetTasks: [],
+                prerequisites: []
+            }));
+            
+            if (dbLessons.length > 0 && defaultPath) {
+                setPath({
+                    ...defaultPath,
+                    lessons: [...defaultPath.lessons, ...dbLessons]
+                });
+            }
+        }
+        fetchLessons();
+        return () => { mounted = false; };
+    }, [module, defaultPath]);
 
     if (!path) return null;
 

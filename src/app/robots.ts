@@ -6,6 +6,6 @@ export default function robots(): MetadataRoute.Robots {
             userAgent: '*',
             allow: '/',
         },
-        sitemap: 'https://centraas-kennykentola.netlify.app/sitemap.xml',
+        sitemap: 'https://centaaskentola.netlify.app/sitemap.xml',
     };
 }

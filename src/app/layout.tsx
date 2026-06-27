@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { AuthButton } from "@/components/auth-button";
+import { ProfileSyncProvider } from "@/components/profile-sync-provider";
 import { Toaster } from "@/components/ui/toaster";
-import { useProfileSync } from '@/hooks/use-profile-sync';
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://centraas-kennykentola.netlify.app'),
+  metadataBase: new URL('https://centaaskentola.netlify.app'),
   title: {
     default: "Centraas - Laboratory Equipment Learning Platform",
     template: "%s | Centraas",
@@ -26,7 +26,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Centraas - Laboratory Equipment Learning Platform",
     description: "Learn AAS Machine and Centrifuge operation through structured modules, SOPs, quizzes, and safety-first training.",
-    url: "https://centraas-kennykentola.netlify.app/",
+    url: "https://centaaskentola.netlify.app/",
     siteName: "Centraas",
     images: [
       {
@@ -54,6 +54,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className="antialiased bg-background text-foreground">
+        <ProfileSyncProvider />
         <div className="sticky top-0 z-[60] border-b border-white/10 bg-slate-950/90 px-4 py-2 backdrop-blur">
           <div className="mx-auto flex max-w-7xl items-center justify-between gap-3 text-xs text-slate-200">
             <span>Safety-first AAS and centrifuge learning</span>

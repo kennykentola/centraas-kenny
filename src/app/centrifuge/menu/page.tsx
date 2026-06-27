@@ -17,6 +17,7 @@ const menuItems = [
   { title: 'Techniques in using Centrifuge Machine', href: '/centrifuge/techniques', icon: Lightbulb },
   { title: 'Practical Questions', href: '/centrifuge/quiz', icon: HelpCircle },
   { title: 'Watch a video', href: '/centrifuge/video', icon: Play },
+  { title: 'Assignments', href: '/centrifuge/assignments', icon: ClipboardList },
 ];
 
 const menuImages = [
@@ -124,7 +125,7 @@ export default function CentrifugeMenuPage() {
             <motion.div
               initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.35, delay: 0.15 + 6 * 0.05 }}
+              transition={{ duration: 0.35, delay: 0.15 + 7 * 0.05 }}
             >
               <Link href="/select-machine" className="block group">
                 <div className="relative bg-white rounded-xl border border-red-100 px-3 py-4 sm:px-4 sm:py-5 hover:border-red-300 hover:shadow-lg hover:shadow-red-500/8 transition-all duration-300 hover:-translate-y-0.5 overflow-hidden">

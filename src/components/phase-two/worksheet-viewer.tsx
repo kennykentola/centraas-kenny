@@ -5,6 +5,8 @@ import { Download, FileText, CheckCircle2 } from 'lucide-react';
 import type { MachineModule } from '@/data/learning-paths';
 import { getLearningPath } from '@/data/learning-paths';
 import { useLearningProgress } from '@/hooks/use-learning-progress';
+import { useEffect, useState } from 'react';
+import { createClient } from '@/lib/supabase/client';
 
 interface WorksheetViewerProps {
     module: MachineModule;
@@ -13,11 +15,69 @@ interface WorksheetViewerProps {
 export function WorksheetViewer({ module }: WorksheetViewerProps) {
     const searchParams = useSearchParams();
     const lessonId = searchParams.get('lesson');
-    const path = getLearningPath(module);
+    const defaultPath = getLearningPath(module);
     const { actions, progress } = useLearningProgress(module);
-    const lesson = path?.lessons.find((item) => item.id === lessonId);
+    const defaultLesson = defaultPath?.lessons.find((item) => item.id === lessonId);
 
-    if (!path || !lesson) {
+    const [lesson, setLesson] = useState(defaultLesson);
+
+    useEffect(() => {
+        let mounted = true;
+        async function fetchDynamicWorksheet() {
+            if (!lessonId) return;
+            const supabase = createClient();
+            if (!supabase) return;
+
+            // 1. Check if the lesson itself is in the DB
+            const { data: lessonData } = await supabase
+                .from('lessons')
+                .select('*')
+                .eq('id', lessonId)
+                .single();
+
+            let targetLesson = defaultLesson;
+
+            if (lessonData) {
+                targetLesson = {
+                    id: lessonData.id,
+                    title: lessonData.title,
+                    description: lessonData.description || '',
+                    difficulty: 'Intermediate' as const,
+                    estimatedMinutes: 30,
+                    objectives: Array.isArray(lessonData.objectives) ? lessonData.objectives : [],
+                    safetyNotes: Array.isArray(lessonData.safety_notes) ? lessonData.safety_notes : [],
+                    href: `/${module}/lesson/${lessonData.id}`,
+                    worksheetTitle: `${lessonData.title} Worksheet`,
+                    worksheetTasks: [],
+                    prerequisites: []
+                };
+            }
+
+            if (!targetLesson) return;
+
+            // 2. Fetch worksheet template for this lesson
+            const { data: wtData } = await supabase
+                .from('worksheet_templates')
+                .select('*')
+                .eq('lesson_id', lessonId)
+                .eq('published', true)
+                .maybeSingle();
+
+            if (wtData && mounted) {
+                setLesson({
+                    ...targetLesson,
+                    worksheetTitle: wtData.title,
+                    worksheetTasks: Array.isArray(wtData.tasks) ? wtData.tasks : []
+                });
+            } else if (targetLesson && mounted) {
+                setLesson(targetLesson);
+            }
+        }
+        fetchDynamicWorksheet();
+        return () => { mounted = false; };
+    }, [lessonId, defaultLesson, module]);
+
+    if (!defaultPath || !lesson) {
         return (
             <div className="rounded-3xl border border-slate-200 bg-white p-6 text-sm leading-relaxed text-slate-600">
                 Select a lesson from the learning path to open its worksheet.
@@ -29,7 +89,7 @@ export function WorksheetViewer({ module }: WorksheetViewerProps) {
     const worksheetText = [
         `${lesson.worksheetTitle}`,
         '',
-        `Module: ${path.title}`,
+        `Module: ${defaultPath.title}`,
         `Lesson: ${lesson.title}`,
         '',
         'Tasks:',

@@ -486,3 +486,64 @@ Centraas has strong potential to become a serious laboratory education platform.
 As a software engineering project, it should become more maintainable by refactoring duplicated quiz logic and adding tests. As an educational platform, it should guide students step by step from theory to practical operation. As an engineering and chemistry learning tool, it should include calculations, troubleshooting, safety, maintenance, and quality control. As a clinical or laboratory training tool, it must clearly state that it supports education and training only; it must not replace official SOPs, manufacturer manuals, qualified supervision, or institutional safety rules.
 
 If implemented properly, this app can become a professional digital laboratory trainer for students, instructors, and laboratory technologists.
+
+Instructor can only view student progress.
+Admin can only change user roles.
+Quizzes are hardcoded in src/data/aas-quiz.ts and src/data/centrifuge-quiz.ts.
+Lessons and worksheet tasks are hardcoded in src/data/learning-paths.ts.
+There is no UI for instructors to add quizzes, lessons, worksheets, assignments, announcements, or feedback.
+Also important: the quiz pages currently do not call recordQuizAttempt, so instructor quiz scores may not be saved properly to Supabase.
+Plan
+Fix tracking first
+Connect AAS and centrifuge quiz submit buttons to useLearningProgress().actions.recordQuizAttempt.
+Make sure quiz scores appear in /instructor.
+Verify worksheet completion and lesson completion are saving.
+
+Add database tables for instructor content
+Add Supabase tables:
+course_modules
+lessons
+quiz_questions
+assignments
+worksheet_templates
+maybe announcements
+
+Upgrade instructor page
+Add tabs:
+Overview
+Students
+Quizzes
+Lessons
+Worksheets
+Assignments
+Submissions
+
+Quiz manager
+Instructor should be able to:
+Add question
+Add 4 options
+Select correct answer
+Choose module: AAS or centrifuge
+Edit/delete questions
+Publish/unpublish quiz questions
+
+Lesson/worksheet manager
+Instructor should be able to:
+Add lesson title
+Add description
+Add objectives
+Add safety notes
+Add worksheet tasks
+Publish content to students
+
+Student quiz pages
+Change quiz pages so they load:
+Supabase instructor-created questions first
+fallback to current hardcoded questions if database has none
+
+Security
+Supabase RLS:
+students can read published content only
+instructors/admins can create/edit content
+students can submit answers
+instructors can view submissions and give feedback
